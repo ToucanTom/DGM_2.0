@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//for laser blasts
 public class Mover : MonoBehaviour {
     private Rigidbody rb;
     public float speed;

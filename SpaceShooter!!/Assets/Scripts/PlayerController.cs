@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//by having this class i can seperate and minimize this information in unity so its easier to look at
 [System.Serializable]
 public class Boundary
 {
@@ -28,7 +30,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Update()
     {
-        if(Input.GetButton("Fire1") &&Time.time > nextFire)
+        if((Input.GetButton("Fire1") || Input.GetKeyDown(KeyCode.Space)) && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
             Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
@@ -50,5 +52,20 @@ public class PlayerController : MonoBehaviour {
             Mathf.Clamp(rb.position.z, boundary.zMin, boundary.zMax)
             );
         rb.rotation = Quaternion.Euler(0.0f, 0.0f, rb.velocity.x * -tilt);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "PowerUp")
+        {
+            //apply power up
+            fireRate -= 0.05f;
+            Destroy(other.gameObject);
+        }
+        else
+        {
+            //do nothing
+            return;
+        }
     }
 }
